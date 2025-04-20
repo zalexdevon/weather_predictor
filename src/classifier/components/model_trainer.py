@@ -125,6 +125,9 @@ class ModelTrainer:
             "========KET QUA CUA MO HINH TOT NHAT================\n"
         )
 
+        self.best_model_results_text += "===THAM SỐ=====\n"
+        self.best_model_results_text += self.searcher.best_params_
+
         ## Chỉ số scoring
         self.best_model_results_text += f"====CHỈ SỐ SCORING====\n"
         self.best_model_results_text += (

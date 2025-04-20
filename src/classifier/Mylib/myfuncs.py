@@ -38,14 +38,10 @@ from PIL import Image
 from typing import Union
 from sklearn import metrics
 import random
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 import pandas as pd
 import time
 import numpy as np
 import pandas as pd
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import seaborn as sns
 
 SCORINGS_PREFER_MININUM = ["log_loss", "mse", "mae"]
@@ -1530,34 +1526,6 @@ def split_classification_folder_23(
                 os.path.join(dest_dir, category, file_name),
             )
 
-
-def connect_to_web_24(url: str, chromedriver_exe_path: str):
-    """Kết nối với trang web bằng Selenium
-
-    Args:
-        url (str): url của trang web
-        chromedriver_exe_path (str): đường dẫn đến file **chromedriver.exe**
-
-    Returns:
-        driver (str): driver của trang web
-    """
-    service = Service(executable_path=chromedriver_exe_path)
-    driver = webdriver.Chrome(service=service)
-    driver.get(url)
-    return driver
-
-
-def click_link_on_web_25(link, driver):
-    """Thực hiện click link trên trang web
-
-    Args:
-        link (_type_): Thẻ a nha !!!!
-        driver (_type_): driver của trang web
-    """
-    WebDriverWait(driver, 10).until(EC.element_to_be_clickable(link))
-    driver.execute_script("arguments[0].scrollIntoView(true);", link)
-    link.click()
-    time.sleep(2)
 
 
 def get_target_col_from_df_26(df):
