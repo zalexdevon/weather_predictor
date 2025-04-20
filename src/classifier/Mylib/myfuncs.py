@@ -1627,3 +1627,6 @@ def get_confusion_matrix_heatmap_29(model, feature, target):
 
 def print():
     print("Hello world")
+
+def print1():
+    print("Hello world")
