@@ -1,0 +1,53 @@
+# COMMON
+scoring: accuracy
+target_score: 0.8
+
+# DATA CORRECTION
+data_correction: 
+      val_size: 0.301
+
+# DATA TRANSFORMATION
+data_transformation: 
+      number: "1_12" # id của data_transformation
+      do_smote: f # t: true, f: false
+      list_before_feature_transformer: 
+            - ColumnsDeleter(columns = ['State_nom'; 'Sex_nom'])
+      list_after_feature_transformer: 
+            - PCA(n_components = 15)
+
+# MODEL TRAINING
+model_trainer: 
+      model_name: XGB_25
+      model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
+
+      # Cần cho model_training_type = rcv, gcv, r, g
+      base_model: XGBClassifier(random_state=42)
+      n_iter: 1 # số tổ hợp chọn khi chạy random search
+      param_grid:
+            n_estimators: 100-200
+            max_depth: 10-20
+            reg_alpha: 0-1
+            reg_lambda: 1-5
+            learning_rate: 10
+            subsample: 0.9-1
+            colsample_bytree: 0.9-1
+
+      # Càn cho model_training_type = m
+      models: 
+            - LogisticRegression(C = 0.1, random_state=42)
+            - LogisticRegression(C = 5, random_state=42)
+            - LogisticRegression(C = 10, random_state=42)
+            - LogisticRegression(C = 15, random_state=42)
+
+# MODEL EVALUATION
+model_evaluation: 
+      data_transformation_no: "1"
+      model_name: XGB_12
+
+# MONITOR PLOT
+monitor_plotter:
+      monitor_plot_html_path: "artifacts/model_trainer/monitor_plot.html"
+      monitor_plot_fig_path: "artifacts/model_trainer/monitor_plot_fig.pkl"
+      target_val_value: 80
+      max_val_value: 100
+      dtick_y_value: 5

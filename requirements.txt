@@ -1,0 +1,21 @@
+tensorflow==2.18.0
+keras-cv==0.9.0
+pandas
+numpy
+dvc
+matplotlib
+mlflow==2.2.2
+notebook
+scikit-learn==1.3.0 # phiên bản này phù hợp với xgboost
+python-box==6.0.2
+pyYAML
+tqdm
+ensure==1.0.2
+joblib
+types-PyYAML
+plotly
+seaborn
+xgboost
+lightgbm 
+imbalanced-learn
+-e .
