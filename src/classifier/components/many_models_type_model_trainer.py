@@ -157,7 +157,7 @@ class ManyModelsTypeModelTrainer:
             "========KẾT QUẢ CỦA BEST MODEL================\n"
         )
         self.best_model_results_text += "===THAM SỐ=====\n"
-        self.best_model_results_text += str(self.best_model.get_params())
+        self.best_model_results_text += f"{self.config.models[self.best_model_index]}"
 
         ## Chỉ số scoring
         self.best_model_results_text += f"\n\n====CHỈ SỐ SCORING====\n"
