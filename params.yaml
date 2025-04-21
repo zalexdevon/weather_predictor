@@ -21,7 +21,7 @@ data_transformation:
 
 # MODEL TRAINING
 model_trainer: 
-      model_name: model6
+      model_name: model7
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g
@@ -38,7 +38,11 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - LogisticRegression(C = 0.1, max_iter = 100,  random_state=42)
+            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.1, reg_lambda=0.1)
+            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.1, reg_lambda=0.5)
+            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.5, reg_lambda=0.5)
+            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.5, reg_lambda=1)
+            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 1, reg_lambda=1)
 
 
 # MODEL EVALUATION
