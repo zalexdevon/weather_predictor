@@ -1,0 +1,3 @@
+rmdir /s /q Mylib
+git clone https://github.com/zalexdevon/Mylib.git
+rmdir /s /q Mylib\.git

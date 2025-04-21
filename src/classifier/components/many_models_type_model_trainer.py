@@ -19,6 +19,7 @@ from sklearn.base import clone
 import time
 from classifier.Mylib import myclasses
 from classifier.Mylib import stringToObjectConverter
+import timeit
 
 
 class ManyModelsTypeModelTrainer:
@@ -54,7 +55,47 @@ class ManyModelsTypeModelTrainer:
         self.train_scorings = []
         self.val_scorings = []
 
-        for index, model in enumerate(self.models):
+        # Train model đầu tiên và get thời gian chạy ước tính
+        print("Bắt đầu train model 0")
+        first_model = self.models[0]
+        start_time = time.time()
+        first_model.fit(self.train_feature_data, self.train_target_data)
+
+        train_scoring = myfuncs.evaluate_model_on_one_scoring_17(
+            first_model,
+            self.train_feature_data,
+            self.train_target_data,
+            self.config.scoring,
+        )
+        val_scoring = myfuncs.evaluate_model_on_one_scoring_17(
+            first_model,
+            self.val_feature_data,
+            self.val_target_data,
+            self.config.scoring,
+        )
+        end_time = time.time()
+
+        # In kết quả
+        print(
+            f"Model 0 -> Train {self.config.scoring}: {train_scoring}, Val {self.config.scoring}: {val_scoring}\n"
+        )
+
+        self.train_scorings.append(train_scoring)
+        self.val_scorings.append(val_scoring)
+
+        self.average_training_time = end_time - start_time
+        self.estimated_all_models_train_time = (
+            self.average_training_time * self.num_models
+        )
+
+        print(f"Thời gian trung bình chạy : {self.average_training_time} (min)")
+        print(
+            f"Thời gian ước tính chạy còn lại: {self.estimated_all_models_train_time} (min)"
+        )
+
+        for index, model in enumerate(self.models[1:]):
+            print(f"Bắt đầu train model {index}")
+
             model.fit(self.train_feature_data, self.train_target_data)
             train_scoring = myfuncs.evaluate_model_on_one_scoring_17(
                 model,
@@ -80,6 +121,9 @@ class ManyModelsTypeModelTrainer:
         print(
             f"\n========KET THUC TRAIN {self.num_models} MODELS !!!!!!================\n"
         )
+        all_model_end_time = time.time()
+        self.true_all_models_train_time = all_model_end_time - start_time
+        self.true_average_train_time = self.true_all_models_train_time / self.num_models
 
     def save_best_model_results(self):
         # Tìm model tốt nhất và chỉ số train, val scoring tương ứng
@@ -96,6 +140,13 @@ class ManyModelsTypeModelTrainer:
         # Các chỉ số đánh giá của model
         self.best_model_results_text = (
             "========KẾT QUẢ MODEL TỐT NHẤT================\n"
+        )
+
+        self.best_model_results_text += (
+            f"Thời gian chạy trung bình cho 1 model: {self.true_average_train_time}\n"
+        )
+        self.best_model_results_text += (
+            f"Thời gian chạy: {self.true_all_models_train_time}\n"
         )
 
         self.best_model_results_text += "===THAM SỐ=====\n"
