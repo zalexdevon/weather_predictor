@@ -1606,3 +1606,23 @@ def get_confusion_matrix_heatmap_29(model, feature, target, class_names: list):
     )
 
     return fig
+
+
+def get_heatmap_for_confusion_matrix_30(confusion_matrix, labels):
+    """Get heatmap cho confusion matrix
+
+    Returns:
+        fig: đối tượng chart
+    """
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.heatmap(
+        confusion_matrix,
+        cbar=True,
+        annot=True,
+        cmap="YlOrRd",
+        ax=ax,
+        xticklabels=labels,
+        yticklabels=labels,
+    )
+
+    return fig

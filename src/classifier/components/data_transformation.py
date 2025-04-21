@@ -215,8 +215,12 @@ class DataTransformation:
                 df_train_feature, df_train_target
             )
 
-        df_val_feature = df_val_transformed.drop(columns=[self.target_col])
-        df_val_target = df_val_transformed[self.target_col]
+        df_train_feature = df_train_feature.astype("float32")
+        df_train_target = df_train_target.astype("int8")
+        df_val_feature = df_val_transformed.drop(columns=[self.target_col]).astype(
+            "float32"
+        )
+        df_val_target = df_val_transformed[self.target_col].astype("int8")
 
         myfuncs.save_python_object(self.config.preprocessor_path, self.preprocessor)
         myfuncs.save_python_object(self.config.train_features_path, df_train_feature)

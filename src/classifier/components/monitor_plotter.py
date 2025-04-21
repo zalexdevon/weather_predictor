@@ -68,7 +68,7 @@ class MonitorPlotter:
         fig.update_layout(
             autosize=False,
             width=100 * (len(model_names) + 2) + 30,
-            height=300,
+            height=400,
             margin=dict(l=30, r=10, t=10, b=0),
             xaxis=dict(
                 title="",

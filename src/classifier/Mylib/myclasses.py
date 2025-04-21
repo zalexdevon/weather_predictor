@@ -8,6 +8,7 @@ import keras_cv
 import matplotlib.cm as cm
 from sklearn.base import BaseEstimator, TransformerMixin, ClassifierMixin
 from classifier.Mylib import myfuncs
+from sklearn import metrics
 
 
 class ConvNetBlock_XceptionVersion(layers.Layer):
@@ -822,31 +823,42 @@ class ClassifierEvaluator:
         self.val_target_data = val_target_data
 
     def evaluate_train_classifier(self):
-        train_accuracy = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.train_feature_data, self.train_target_data, "accuracy"
+        train_pred = self.model.predict(self.train_feature_data)
+        val_pred = self.model.predict(self.val_feature_data)
+
+        # Accuracy
+        train_accuracy = metrics.accuracy_score(self.train_target_data, train_pred)
+        val_accuracy = metrics.accuracy_score(self.val_target_data, val_pred)
+
+        # Classification report
+        class_names = np.asarray(class_names)
+        named_train_target_data = class_names[self.train_target_data]
+        named_train_pred = class_names[train_pred]
+        named_val_target_data = class_names[self.val_target_data]
+        named_val_pred = class_names[val_pred]
+
+        train_classification_report = metrics.classification_report(
+            named_train_target_data, named_train_pred
         )
-        val_accuracy = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.val_feature_data, self.val_target_data, "accuracy"
+        val_classification_report = metrics.classification_report(
+            named_val_target_data, named_val_pred
         )
 
-        train_classification_report = myfuncs.get_classification_report_18(
-            self.model,
-            self.train_feature_data,
-            self.train_target_data,
-            self.class_names,
+        # Confusion matrix
+        train_confusion_matrix = metrics.confusion_matrix(
+            named_train_target_data, named_train_pred, labels=class_names
         )
-        val_classification_report = myfuncs.get_classification_report_18(
-            self.model, self.val_feature_data, self.val_target_data, self.class_names
+        np.fill_diagonal(train_confusion_matrix, 0)
+        train_confusion_matrix = myfuncs.get_heatmap_for_confusion_matrix_30(
+            train_confusion_matrix, class_names
         )
 
-        train_confusion_matrix = myfuncs.get_confusion_matrix_heatmap_29(
-            self.model,
-            self.train_feature_data,
-            self.train_target_data,
-            self.class_names,
+        val_confusion_matrix = metrics.confusion_matrix(
+            named_val_target_data, named_val_pred, labels=class_names
         )
-        val_confusion_matrix = myfuncs.get_confusion_matrix_heatmap_29(
-            self.model, self.val_feature_data, self.val_target_data, self.class_names
+        np.fill_diagonal(val_confusion_matrix, 0)
+        val_confusion_matrix = myfuncs.get_heatmap_for_confusion_matrix_30(
+            val_confusion_matrix, class_names
         )
 
         model_results_text = f"Train accuracy: {train_accuracy}\n"
@@ -861,22 +873,27 @@ class ClassifierEvaluator:
         return model_results_text, train_confusion_matrix, val_confusion_matrix
 
     def evaluate_test_classifier(self):
-        test_accuracy = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.train_feature_data, self.train_target_data, "accuracy"
+        test_pred = self.model.predict(self.train_feature_data)
+
+        # Accuracy
+        test_accuracy = metrics.accuracy_score(self.train_target_data, test_pred)
+
+        # Classification report
+        class_names = np.asarray(class_names)
+        named_train_target_data = class_names[self.train_target_data]
+        named_train_pred = class_names[test_pred]
+
+        test_classification_report = metrics.classification_report(
+            named_train_target_data, named_train_pred
         )
 
-        test_classification_report = myfuncs.get_classification_report_18(
-            self.model,
-            self.train_feature_data,
-            self.train_target_data,
-            self.class_names,
+        # Confusion matrix
+        test_confusion_matrix = metrics.confusion_matrix(
+            named_train_target_data, named_train_pred, labels=class_names
         )
-
-        test_confusion_matrix = myfuncs.get_confusion_matrix_heatmap_29(
-            self.model,
-            self.train_feature_data,
-            self.train_target_data,
-            self.class_names,
+        np.fill_diagonal(test_confusion_matrix, 0)
+        test_confusion_matrix = myfuncs.get_heatmap_for_confusion_matrix_30(
+            test_confusion_matrix, class_names
         )
 
         model_results_text = f"Test Accuracy: {test_accuracy}\n"
@@ -927,18 +944,18 @@ class RegressorEvaluator:
         self.val_target_data = val_target_data
 
     def evaluate_train_regressor(self):
-        train_rmse = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.train_feature_data, self.train_target_data, "mse"
+        train_pred = self.model.predict(self.train_target_data)
+        val_pred = self.model.predict(self.val_target_data)
+
+        # RMSE
+        train_rmse = np.sqrt(
+            metrics.mean_squared_error(self.train_target_data, train_pred)
         )
-        val_rmse = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.val_feature_data, self.val_target_data, "mse"
-        )
-        train_mae = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.train_feature_data, self.train_target_data, "mae"
-        )
-        val_mae = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.val_feature_data, self.val_target_data, "mae"
-        )
+        val_rmse = np.sqrt(metrics.mean_squared_error(self.val_target_data, val_pred))
+
+        # MAE
+        train_mae = metrics.mean_absolute_error(self.train_target_data, train_pred)
+        val_mae = metrics.mean_absolute_error(self.val_target_data, val_pred)
 
         model_results_text = f"Train RMSE: {train_rmse}\n"
         model_results_text += f"Val RMSE: {val_rmse}\n"
@@ -948,12 +965,15 @@ class RegressorEvaluator:
         return model_results_text
 
     def evaluate_test_regressor(self):
-        test_rmse = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.train_feature_data, self.train_target_data, "mse"
+        test_pred = self.model.predict(self.train_target_data)
+
+        # RMSE
+        test_rmse = np.sqrt(
+            metrics.mean_squared_error(self.train_target_data, test_pred)
         )
-        test_mae = myfuncs.evaluate_model_on_one_scoring_17(
-            self.model, self.train_feature_data, self.train_target_data, "mae"
-        )
+
+        # MAE
+        test_mae = metrics.mean_absolute_error(self.train_target_data, test_pred)
 
         model_results_text = f"Test RMSE: {test_rmse}\n"
         model_results_text = f"Test MAE: {test_mae}\n"
