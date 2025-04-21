@@ -16,13 +16,13 @@ stages:
             params:
                   - data_transformation.number
             outs:
-                  - artifacts/data_transformation_1
+                  - artifacts/data_transformation_${P}
 
       model_trainer:
             cmd: python src/classifier/pipeline/stage_04_model_training.py
             deps:
                   - src/classifier/pipeline/stage_04_model_training.py
-                  - artifacts/data_transformation_1
+                  - artifacts/data_transformation_${P}
             params:
                   - model_trainer
 

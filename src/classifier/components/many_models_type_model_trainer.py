@@ -83,7 +83,7 @@ class ManyModelsTypeModelTrainer:
         self.train_scorings.append(train_scoring)
         self.val_scorings.append(val_scoring)
 
-        self.average_training_time = end_time - start_time
+        self.average_training_time = (end_time - start_time) / 60
         self.estimated_all_models_train_time = (
             self.average_training_time * self.num_models
         )
@@ -122,7 +122,7 @@ class ManyModelsTypeModelTrainer:
             f"\n========KET THUC TRAIN {self.num_models} MODELS !!!!!!================\n"
         )
         all_model_end_time = time.time()
-        self.true_all_models_train_time = all_model_end_time - start_time
+        self.true_all_models_train_time = (all_model_end_time - start_time) / 60
         self.true_average_train_time = self.true_all_models_train_time / self.num_models
 
     def save_best_model_results(self):
@@ -140,20 +140,28 @@ class ManyModelsTypeModelTrainer:
         # Các chỉ số đánh giá của model
         self.best_model_results_text = "========KẾT QUẢ CỦA CÁC MODEL================\n"
 
+        for index, model_desc, train_scoring, val_scoring in zip(
+            range(self.num_models),
+            self.config.models,
+            self.train_scorings,
+            self.val_scorings,
+        ):
+            if index == self.best_model_index:
+                model_desc = f"{model_desc} ***************"
+            self.best_model_results_text += f"{model_desc}\n-> train scoring: {train_scoring}, val scoring: {val_scoring}\n\n"
+
         self.best_model_results_text += (
             f"Thời gian chạy trung bình cho 1 model: {self.true_average_train_time}\n"
         )
         self.best_model_results_text += (
-            f"Thời gian chạy: {self.true_all_models_train_time}\n"
+            f"Thời gian chạy: {self.true_all_models_train_time}\n\n"
         )
 
-        self.best_model_results_text += f"Chỉ số scoring của {self.num_models} model\n"
-        for model_desc, train_scoring, val_scoring in zip(
-            self.config.models, self.train_scorings, self.val_scorings
-        ):
-            self.best_model_results_text += f"{model_desc}\n-> train scoring: {train_scoring}, val scoring: {val_scoring}\n\n"
+        self.best_model_results_text += (
+            "==================================================\n"
+        )
 
-        self.best_model_results_text = (
+        self.best_model_results_text += (
             "========KẾT QUẢ CỦA BEST MODEL================\n"
         )
         self.best_model_results_text += "===THAM SỐ=====\n"
@@ -181,6 +189,12 @@ class ManyModelsTypeModelTrainer:
             ).evaluate()
         )
         self.best_model_results_text += best_model_results_text
+
+        self.best_model_results_text += (
+            "==================================================\n"
+        )
+
+        print(self.best_model_results_text)
 
         train_confusion_matrix_path = os.path.join(
             self.config.root_dir, "train_confusion_matrix.png"
