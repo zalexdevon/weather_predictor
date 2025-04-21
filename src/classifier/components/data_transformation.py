@@ -111,11 +111,15 @@ class NamedColumnTransformer(BaseEstimator, TransformerMixin):
     def transform(self, X, y=None):
         X = self.column_transformer.transform(X)
 
+        cols = myfuncs.fix_name_by_LGBM_standard(
+            myfuncs.get_real_column_name_from_get_feature_names_out(
+                self.column_transformer.get_feature_names_out()
+            )
+        )
+
         return pd.DataFrame(
             X,
-            columns=myfuncs.get_real_column_name_from_get_feature_names_out(
-                self.column_transformer.get_feature_names_out()
-            ),
+            columns=cols,
         )
 
     def fit_transform(self, X, y=None):

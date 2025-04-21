@@ -6,7 +6,7 @@ from tensorflow.keras import layers
 from tensorflow import keras
 import keras_cv
 import matplotlib.cm as cm
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.base import BaseEstimator, TransformerMixin, ClassifierMixin
 from classifier.Mylib import myfuncs
 
 
@@ -840,10 +840,13 @@ class ClassifierEvaluator:
         )
 
         train_confusion_matrix = myfuncs.get_confusion_matrix_heatmap_29(
-            self.model, self.train_feature_data, self.train_target_data
+            self.model,
+            self.train_feature_data,
+            self.train_target_data,
+            self.class_names,
         )
         val_confusion_matrix = myfuncs.get_confusion_matrix_heatmap_29(
-            self.model, self.val_feature_data, self.val_target_data
+            self.model, self.val_feature_data, self.val_target_data, self.class_names
         )
 
         model_results_text = f"Train accuracy: {train_accuracy}\n"
@@ -870,7 +873,10 @@ class ClassifierEvaluator:
         )
 
         test_confusion_matrix = myfuncs.get_confusion_matrix_heatmap_29(
-            self.model, self.train_feature_data, self.train_target_data
+            self.model,
+            self.train_feature_data,
+            self.train_target_data,
+            self.class_names,
         )
 
         model_results_text = f"Test Accuracy: {test_accuracy}\n"
@@ -1023,3 +1029,6 @@ class BestModelSearcher:
         val_scoring = self.val_scorings[index_best_model]
 
         return best_model, train_scoring, val_scoring
+
+
+# class CustomStackingClassifier(BaseEstimator, ClassifierMixin):
