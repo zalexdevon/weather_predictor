@@ -8,15 +8,16 @@ data_correction:
 
 # DATA TRANSFORMATION
 data_transformation: 
-      number: dt1_2 # id của data_transformation
+      number: dt2 # id của data_transformation
       do_smote: f # t: true, f: false
-      list_before_feature_transformer: []
+      list_before_feature_transformer:
+            - PolynomialFeatures(degree=2, include_bias=False)
       
       list_after_feature_transformer: []
 
 # MODEL TRAINING
 model_trainer: 
-      model_name: model1_3
+      model_name: model2
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g
@@ -48,6 +49,6 @@ model_evaluation:
 monitor_plotter:
       monitor_plot_html_path: "artifacts/model_trainer/monitor_plot.html"
       monitor_plot_fig_path: "artifacts/model_trainer/monitor_plot_fig.pkl"
-      target_val_value: 80
+      target_val_value: 99
       max_val_value: 100
       dtick_y_value: 5

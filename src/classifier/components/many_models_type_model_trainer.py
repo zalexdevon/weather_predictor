@@ -102,7 +102,7 @@ class ManyModelsTypeModelTrainer:
         self.best_model_results_text += str(self.best_model.get_params())
 
         ## Chỉ số scoring
-        self.best_model_results_text += f"====CHỈ SỐ SCORING====\n"
+        self.best_model_results_text += f"\n\n====CHỈ SỐ SCORING====\n"
         self.best_model_results_text += (
             f"Train {self.config.scoring}: {self.train_scoring}\n"
         )

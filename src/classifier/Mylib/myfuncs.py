@@ -1578,13 +1578,21 @@ def get_value_with_the_meaning_28(scores: tuple, scoring):
     return scores
 
 
-def get_confusion_matrix_heatmap_29(model, feature, target):
+def get_confusion_matrix_heatmap_29(model, feature, target, class_names: list):
     """Vẽ confustion matrix heatmap
 
     Returns:
         fig: _description_
     """
+    class_names = np.asarray(class_names)
+
+    target = [int(item) for item in target]
+    target = class_names[target]
+
     prediction = model.predict(feature)
+    prediction = [int(item) for item in prediction]
+    prediction = class_names[prediction]
+
     cm = metrics.confusion_matrix(target, prediction)
     np.fill_diagonal(cm, 0)
     fig, ax = plt.subplots(figsize=(8, 6))
