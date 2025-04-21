@@ -1,10 +1,10 @@
 # COMMON
 scoring: accuracy
-target_score: 0.8
+target_score: 0.99
 
 # DATA CORRECTION
 data_correction: 
-      val_size: 0.301
+      val_size: 0.1
 
 # DATA TRANSFORMATION
 data_transformation: 

@@ -1527,7 +1527,6 @@ def split_classification_folder_23(
             )
 
 
-
 def get_target_col_from_df_26(df):
     """Get cột target từ df
     Returns:
@@ -1592,9 +1591,3 @@ def get_confusion_matrix_heatmap_29(model, feature, target):
     sns.heatmap(cm, cbar=True, annot=True, cmap="YlOrRd", ax=ax)
 
     return fig
-
-def print():
-    print("Hello world")
-
-def print1():
-    print("Hello world")
