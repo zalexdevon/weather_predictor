@@ -882,7 +882,7 @@ class ClassifierEvaluator:
 
     def evaluate(self):
         return (
-            self.evaluate_train_classifier
+            self.evaluate_train_classifier()
             if self.val_feature_data is not None
             else self.evaluate_test_classifier()
         )
