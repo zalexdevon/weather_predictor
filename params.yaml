@@ -33,11 +33,11 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - LogisticRegression(C = 1, random_state=42)
-            - LogisticRegression(C = 5, random_state=42)
-            - LogisticRegression(C = 10, random_state=42)
-            - LogisticRegression(C = 15, random_state=42)
-            - LogisticRegression(C = 20, random_state=42)
+            - LogisticRegression(C = 1, max_iter = 1000,  random_state=42)
+            - LogisticRegression(C = 5,max_iter = 1000, random_state=42)
+            - LogisticRegression(C = 10,max_iter = 1000, random_state=42)
+            - LogisticRegression(C = 15,max_iter = 1000, random_state=42)
+            - LogisticRegression(C = 20, max_iter = 1000, random_state=42)
 
 # MODEL EVALUATION
 model_evaluation: 

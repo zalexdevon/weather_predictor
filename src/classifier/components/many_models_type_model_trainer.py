@@ -89,6 +89,7 @@ class ManyModelsTypeModelTrainer:
                 self.train_scorings,
                 self.val_scorings,
                 self.config.target_score,
+                self.config.scoring,
             ).next()
         )
 
