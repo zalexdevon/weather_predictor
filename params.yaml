@@ -11,8 +11,6 @@ data_transformation:
       number: dt2_1 # id của data_transformation
       do_smote: f # t: true, f: false
       list_before_feature_transformer: []
-
-      
       list_after_feature_transformer:
             - PolynomialFeatures(degree=2, include_bias=False)
 
