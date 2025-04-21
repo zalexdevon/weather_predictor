@@ -16,7 +16,7 @@ data_transformation:
 
 # MODEL TRAINING
 model_trainer: 
-      model_name: model1
+      model_name: model1_1
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g

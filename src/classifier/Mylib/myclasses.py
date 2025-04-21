@@ -999,6 +999,7 @@ class BestModelSearcher:
         )
 
     def next(self):
+        self.find_train_val_scorings_to_find_the_best()
 
         indexs_good_model = np.where(
             (self.val_scorings_to_find_the_best > self.target_score)
