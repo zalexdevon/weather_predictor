@@ -1593,14 +1593,18 @@ def get_confusion_matrix_heatmap_29(model, feature, target, class_names: list):
     prediction = [int(item) for item in prediction]
     prediction = class_names[prediction]
 
-    # TODO: d
-    print(f"target: {target[:10]}")
-    print(f"prediction: {prediction[:10]}")
-    # d
-
-    cm = metrics.confusion_matrix(target, prediction)
+    labels = np.unique(target)
+    cm = metrics.confusion_matrix(target, prediction, labels=labels)
     np.fill_diagonal(cm, 0)
     fig, ax = plt.subplots(figsize=(8, 6))
-    sns.heatmap(cm, cbar=True, annot=True, cmap="YlOrRd", ax=ax)
+    sns.heatmap(
+        cm,
+        cbar=True,
+        annot=True,
+        cmap="YlOrRd",
+        ax=ax,
+        xticklabels=labels,
+        yticklabels=labels,
+    )
 
     return fig
