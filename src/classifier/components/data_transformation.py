@@ -157,6 +157,10 @@ class DataTransformation:
             ]
         )
 
+        # TODO: d
+        print("Reach before_feature_pipeline")
+        # d
+
         after_feature_pipeline = Pipeline(
             steps=[
                 (str(index), transformer)
