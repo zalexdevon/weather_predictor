@@ -1028,7 +1028,7 @@ class BestModelSearcher:
         train_scoring = self.train_scorings[index_best_model]
         val_scoring = self.val_scorings[index_best_model]
 
-        return best_model, train_scoring, val_scoring
+        return best_model, index_best_model, train_scoring, val_scoring
 
 
 class CustomStackingClassifier(BaseEstimator, ClassifierMixin):

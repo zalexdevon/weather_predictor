@@ -127,7 +127,7 @@ class ManyModelsTypeModelTrainer:
 
     def save_best_model_results(self):
         # Tìm model tốt nhất và chỉ số train, val scoring tương ứng
-        self.best_model, self.train_scoring, self.val_scoring = (
+        self.best_model, self.best_model_index, self.train_scoring, self.val_scoring = (
             myclasses.BestModelSearcher(
                 self.models,
                 self.train_scorings,
@@ -138,9 +138,7 @@ class ManyModelsTypeModelTrainer:
         )
 
         # Các chỉ số đánh giá của model
-        self.best_model_results_text = (
-            "========KẾT QUẢ MODEL TỐT NHẤT================\n"
-        )
+        self.best_model_results_text = "========KẾT QUẢ CỦA CÁC MODEL================\n"
 
         self.best_model_results_text += (
             f"Thời gian chạy trung bình cho 1 model: {self.true_average_train_time}\n"
@@ -149,6 +147,15 @@ class ManyModelsTypeModelTrainer:
             f"Thời gian chạy: {self.true_all_models_train_time}\n"
         )
 
+        self.best_model_results_text += f"Chỉ số scoring của {self.num_models} model\n"
+        for model_desc, train_scoring, val_scoring in zip(
+            self.config.models, self.train_scorings, self.val_scorings
+        ):
+            self.best_model_results_text += f"{model_desc}\n-> train scoring: {train_scoring}, val scoring: {val_scoring}\n\n"
+
+        self.best_model_results_text = (
+            "========KẾT QUẢ CỦA BEST MODEL================\n"
+        )
         self.best_model_results_text += "===THAM SỐ=====\n"
         self.best_model_results_text += str(self.best_model.get_params())
 
