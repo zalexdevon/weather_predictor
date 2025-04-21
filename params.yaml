@@ -18,7 +18,7 @@ data_transformation:
 
 # MODEL TRAINING
 model_trainer: 
-      model_name: model2_2
+      model_name: model3
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g
@@ -35,11 +35,10 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - LogisticRegression(C = 1, max_iter = 1000,  random_state=42)
-            - LogisticRegression(C = 5,max_iter = 1000, random_state=42)
-            - LogisticRegression(C = 10,max_iter = 1000, random_state=42)
-            - LogisticRegression(C = 15,max_iter = 1000, random_state=42)
-            - LogisticRegression(C = 20, max_iter = 1000, random_state=42)
+            - LogisticRegression(C = 25, max_iter = 1000,  random_state=42)
+            - LogisticRegression(C = 35,max_iter = 1000, random_state=42)
+            - LogisticRegression(C = 45,max_iter = 1000, random_state=42)
+            - LogisticRegression(C = 55,max_iter = 1000, random_state=42)
 
 # MODEL EVALUATION
 model_evaluation: 

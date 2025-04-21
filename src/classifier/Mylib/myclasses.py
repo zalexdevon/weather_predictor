@@ -1031,4 +1031,42 @@ class BestModelSearcher:
         return best_model, train_scoring, val_scoring
 
 
-# class CustomStackingClassifier(BaseEstimator, ClassifierMixin):
+class CustomStackingClassifier(BaseEstimator, ClassifierMixin):
+    def __init__(self, estimators, final_estimator):
+        self.estimators = estimators
+        self.final_estimator = final_estimator
+
+    def fit(self, X, y):
+        for estimator in self.estimators:
+            estimator.fit(X, y)
+
+        new_feature = self.get_new_feature_through_estimators(X)
+
+        self.final_estimator.fit(new_feature, y)
+
+        return self
+
+    def predict(self, X):
+        new_feature = self.get_new_feature_through_estimators(X)
+
+        return self.final_estimator.predict(new_feature)
+
+    def predict_proba(self, X):
+
+        new_feature = self.get_new_feature_through_estimators(X)
+
+        return self.final_estimator.predict_proba(new_feature)
+
+    def get_new_feature_through_estimators(self, X):
+        """Get new feature thông qua các estimators
+
+        VD: nếu có 3 estimators và có 4 label cần phân loại thì kích thước của kết quả là (N, 3 * 4) = (N, 12)
+
+        với N: số sample
+        """
+        list_predict_proba = [
+            estimator.predict_proba(X) for estimator in self.estimators
+        ]
+        new_feature = np.hstack(*list_predict_proba)
+
+        return new_feature
