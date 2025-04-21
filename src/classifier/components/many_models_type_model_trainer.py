@@ -99,7 +99,7 @@ class ManyModelsTypeModelTrainer:
         )
 
         self.best_model_results_text += "===THAM SỐ=====\n"
-        self.best_model_results_text += self.best_model.get_params()
+        self.best_model_results_text += str(self.best_model.get_params())
 
         ## Chỉ số scoring
         self.best_model_results_text += f"====CHỈ SỐ SCORING====\n"
