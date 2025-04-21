@@ -19,20 +19,20 @@ data_transformation:
       val_data_path: artifacts/data_correction/val_data.pkl
 
       # output
-      root_dir: artifacts/data_transformation/${P}
-      preprocessor_path: artifacts/data_transformation/${P}/preprocessor.pkl
-      train_features_path: artifacts/data_transformation/${P}/train_features.pkl
-      train_target_path: artifacts/data_transformation/${P}/train_target.pkl
-      val_features_path: artifacts/data_transformation/${P}/val_features.pkl
-      val_target_path: artifacts/data_transformation/${P}/val_target.pkl
+      root_dir: artifacts/data_transformation_1/${P}
+      preprocessor_path: artifacts/data_transformation_1/${P}/preprocessor.pkl
+      train_features_path: artifacts/data_transformation_1/${P}/train_features.pkl
+      train_target_path: artifacts/data_transformation_1/${P}/train_target.pkl
+      val_features_path: artifacts/data_transformation_1/${P}/val_features.pkl
+      val_target_path: artifacts/data_transformation_1/${P}/val_target.pkl
 
 # MODEL TRAINING
 model_trainer:
       # input
-      train_feature_path: artifacts/data_transformation/${P}/train_features.pkl
-      train_target_path: artifacts/data_transformation/${P}/train_target.pkl
-      val_feature_path: artifacts/data_transformation/${P}/val_features.pkl
-      val_target_path: artifacts/data_transformation/${P}/val_target.pkl
+      train_feature_path: artifacts/data_transformation_1/${P}/train_features.pkl
+      train_target_path: artifacts/data_transformation_1/${P}/train_target.pkl
+      val_feature_path: artifacts/data_transformation_1/${P}/val_features.pkl
+      val_target_path: artifacts/data_transformation_1/${P}/val_target.pkl
       class_names_path: artifacts/data_correction/class_names.pkl
 
       # output
