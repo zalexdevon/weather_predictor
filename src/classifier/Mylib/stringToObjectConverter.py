@@ -35,6 +35,7 @@ from tensorflow.keras import Input
 from tensorflow.keras.optimizers import RMSprop
 from sklearn.linear_model import LogisticRegression
 from classifier.Mylib.myclasses import ColumnsDeleter
+from sklearn.decomposition import PCA
 
 
 def do_ast_literal_eval_advanced_7(text: str):
