@@ -2,10 +2,7 @@ from classifier import logger
 import pandas as pd
 from classifier.entity.config_entity import DataTransformationConfig
 from classifier.Mylib import myfuncs
-from sklearn.preprocessing import (
-    OneHotEncoder,
-    StandardScaler,
-)
+from sklearn.preprocessing import OneHotEncoder, StandardScaler, MinMaxScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -65,20 +62,20 @@ class DuringFeatureTransformer(BaseEstimator, TransformerMixin):
         nominal_cols_pipeline = Pipeline(
             steps=[
                 ("1", OneHotEncoder(sparse_output=False, drop="first")),
-                ("2", StandardScaler()),
+                ("2", MinMaxScaler()),
             ]
         )
 
         ordinal_pipeline = Pipeline(
             steps=[
-                ("1", CustomOrdinalEncoder(min_value=1)),
-                ("2", StandardScaler()),
+                ("1", CustomOrdinalEncoder()),
+                ("2", MinMaxScaler()),
             ]
         )
 
         self.column_transformer = ColumnTransformer(
             transformers=[
-                ("1", StandardScaler(), numeric_cols),
+                ("1", MinMaxScaler(), numeric_cols),
                 ("2", nominal_cols_pipeline, nominal_cols),
                 ("3", ordinal_pipeline, ordinal_cols),
             ],
