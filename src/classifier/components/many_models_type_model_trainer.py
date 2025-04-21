@@ -93,7 +93,7 @@ class ManyModelsTypeModelTrainer:
             f"Thời gian ước tính chạy còn lại: {self.estimated_all_models_train_time} (min)"
         )
 
-        for index, model in enumerate(self.models[1:]):
+        for index, model in enumerate(self.models[1:], 1):
             print(f"Bắt đầu train model {index}")
 
             model.fit(self.train_feature_data, self.train_target_data)
