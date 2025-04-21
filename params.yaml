@@ -19,7 +19,6 @@ data_transformation:
 
 
 
-
 # MODEL TRAINING
 model_trainer: 
       model_name: model6
@@ -39,11 +38,7 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.1, reg_lambda=0.1, learning_rate=0.01)
-            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.1, reg_lambda=0.5, learning_rate=0.01)
-            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.1, reg_lambda=0.5, learning_rate=0.001)
-            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.1, reg_lambda=1, learning_rate=0.01)
-            - XGBClassifier(n_estimators=300, max_depth=20, reg_alpha = 0.1, reg_lambda=1, learning_rate=0.001)
+            - LogisticRegression(C = 0.1, max_iter = 100,  random_state=42)
 
 
 # MODEL EVALUATION
