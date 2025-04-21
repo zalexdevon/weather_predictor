@@ -9,6 +9,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
+import re
 
 
 class UnnecessaryColsDeleter(
@@ -28,12 +29,27 @@ class UnnecessaryColsDeleter(
         # Xoa cac cot khong can thiet
         df = df.drop(
             columns=[
-                "ChestScan",
-                "RaceEthnicityCategory",
-                "BMI",
-                "HIVTesting",
-                "HighRiskLastYear",
-                "CovidPos",
+                "country",
+                "location_name",
+                "latitude",
+                "longitude",
+                "timezone",
+                "last_updated_epoch",
+                "last_updated",
+                "temperature_celsius",
+                "temperature_fahrenheit",
+                "condition_text",
+                "wind_mph",
+                "wind_direction",
+                "pressure_mb",
+                "precip_mm",
+                "precip_in",
+                "feels_like_celsius",
+                "feels_like_fahrenheit",
+                "visibility_miles",
+                "gust_mph",
+                "air_quality_us-epa-index",
+                "air_quality_gb-defra-index",
             ]
         )
 
@@ -58,41 +74,27 @@ class ColNamesPreprocessor(BaseEstimator, TransformerMixin):
 
         #  Đổi tên cột
         rename_dict = {
-            "State": "State_nom",
-            "Sex": "Sex_nom",
-            "GeneralHealth": "GeneralHealth_ord",
-            "PhysicalHealthDays": "PhysicalHealthDays_numcat",
-            "MentalHealthDays": "MentalHealthDays_numcat",
-            "LastCheckupTime": "LastCheckupTime_ord",
-            "PhysicalActivities": "PhysicalActivities_bin",
-            "SleepHours": "SleepHours_numcat",
-            "RemovedTeeth": "RemovedTeeth_nom",
-            "HadAngina": "HadAngina_bin",
-            "HadStroke": "HadStroke_bin",
-            "HadAsthma": "HadAsthma_bin",
-            "HadSkinCancer": "HadSkinCancer_bin",
-            "HadCOPD": "HadCOPD_bin",
-            "HadDepressiveDisorder": "HadDepressiveDisorder_bin",
-            "HadKidneyDisease": "HadKidneyDisease_bin",
-            "HadArthritis": "HadArthritis_bin",
-            "HadDiabetes": "HadDiabetes_nom",
-            "DeafOrHardOfHearing": "DeafOrHardOfHearing_bin",
-            "BlindOrVisionDifficulty": "BlindOrVisionDifficulty_bin",
-            "DifficultyConcentrating": "DifficultyConcentrating_bin",
-            "DifficultyWalking": "DifficultyWalking_bin",
-            "DifficultyDressingBathing": "DifficultyDressingBathing_bin",
-            "DifficultyErrands": "DifficultyErrands_bin",
-            "SmokerStatus": "SmokerStatus_ord",
-            "ECigaretteUsage": "ECigaretteUsage_ord",
-            "AgeCategory": "AgeCategory_nom",
-            "HeightInMeters": "HeightInMeters_num",
-            "WeightInKilograms": "WeightInKilograms_num",
-            "AlcoholDrinkers": "AlcoholDrinkers_bin",
-            "FluVaxLast12": "FluVaxLast12_bin",
-            "PneumoVaxEver": "PneumoVaxEver_bin",
-            "TetanusLast10Tdap": "TetanusLast10Tdap_nom",
-            "TetanusLast10Tdap": "TetanusLast10Tdap_nom",
-            "HadHeartAttack": "HadHeartAttack_target",
+            "wind_kph": "wind_kph_num",
+            "wind_degree": "wind_degree_num",
+            "pressure_in": "pressure_in_num",
+            "humidity": "humidity_num",
+            "cloud": "cloud_num",
+            "visibility_km": "visibility_km_num",
+            "uv_index": "uv_index_num",
+            "gust_kph": "gust_kph_num",
+            "air_quality_Carbon_Monoxide": "air_quality_Carbon_Monoxide_num",
+            "air_quality_Ozone": "air_quality_Ozone_num",
+            "air_quality_Nitrogen_dioxide": "air_quality_Nitrogen_dioxide_num",
+            "air_quality_Sulphur_dioxide": "air_quality_Sulphur_dioxide_num",
+            "air_quality_PM2.5": "air_quality_PM2_5_num",
+            "air_quality_PM10": "air_quality_PM10_num",
+            "sunrise": "sunrise_ord",
+            "sunset": "sunset_ord",
+            "moonrise": "moonrise_ord",
+            "moonset": "moonset_ord",
+            "moon_phase": "moon_phase_nom",
+            "moon_illumination": "moon_illumination_num",
+            "temp_bin": "temp_bin_target",
         }
 
         df = df.rename(columns=rename_dict)
@@ -159,13 +161,20 @@ class NumericColDataPreprocessor(
     def transform(self, X, y=None):
         df = X
 
-        # Cột HeightInMeters_num
-        col_name = "HeightInMeters_num"
-        df[col_name] = df[col_name].apply(lambda x: np.nan if x > 2.01 else x)
+        # Cột air_quality_Carbon_Monoxide_num
+        col_name = "air_quality_Carbon_Monoxide_num"
+        a = df[col_name][df[col_name] < 0]
+        df.loc[a.index, col_name] = np.nan
 
-        # Cột WeightInKilograms_num
-        col_name = "WeightInKilograms_num"
-        df[col_name] = df[col_name].apply(lambda x: np.nan if x > 136.08 else x)
+        # Cột air_quality_Sulphur_dioxide_num
+        col_name = "air_quality_Sulphur_dioxide_num"
+        a = df[col_name][df[col_name] < 0]
+        df.loc[a.index, col_name] = np.nan
+
+        # Cột air_quality_PM10_num
+        col_name = "air_quality_PM10_num"
+        a = df[col_name][df[col_name] < 0]
+        df.loc[a.index, col_name] = np.nan
 
         return df
 
@@ -187,12 +196,6 @@ class NumericCatColDataPreprocessor(
 
     def transform(self, X, y=None):
         df = X
-
-        # UPDATE Cột SleepHours_num
-        col_name = "SleepHours_numcat"
-        replaced_value = list(range(13, 24 + 1))
-        replaced_dict = dict(zip(replaced_value, [np.nan] * len(replaced_value)))
-        df[col_name] = df[col_name].replace(replaced_dict)
 
         return df
 
@@ -243,6 +246,18 @@ class NominalColDataPreprocessor(
         return self.transform(X)
 
 
+# Chuỗi nào có PM thì giá trị giờ cộng thêm 12 phút
+def process_time(gold_time: str):
+    if gold_time.endswith("PM"):
+        parts = gold_time.split(":")
+        hour = int(parts[0]) + 12
+        gold_time = f"{hour}:{parts[1]}"
+
+    res = re.split("(AM|PM)", gold_time)[0].strip()
+    res = res.split(":")[0]
+    return res
+
+
 class OrdinalColDataPreprocessor(
     BaseEstimator, TransformerMixin
 ):  # Tách ra nhiều giai đoạn
@@ -256,6 +271,38 @@ class OrdinalColDataPreprocessor(
 
     def transform(self, X, y=None):
         df = X
+
+        ordinal_cols = myfuncs.get_different_types_cols_from_df_4(df)[5]
+
+        # Biển đổi 4 cột sunrise_ord, sunset_ord, moonrise_ord, moonset_ord
+        format = r"\d+:\d+\s*(AM|PM)"
+
+        df_ordinal_cols = df[ordinal_cols]
+        index_not_satisfy_format = (
+            df_ordinal_cols[
+                df_ordinal_cols.applymap(
+                    lambda item: re.fullmatch(format, item) is None
+                )
+            ]
+            .stack()
+            .index
+        )
+
+        ## Get các giá trị ứng với hiện tượng có xảy ra
+        df_ordinal_cols_happen_stack = df_ordinal_cols.stack()
+        df_ordinal_cols_happen_stack = df_ordinal_cols_happen_stack[
+            ~df_ordinal_cols_happen_stack.index.isin(index_not_satisfy_format)
+        ]
+        df_ordinal_cols_happen_stack = df_ordinal_cols_happen_stack.apply(
+            lambda item: process_time(item)
+        )
+
+        ## Cập nhật
+        df_ordinal_cols_stack = df_ordinal_cols.stack()
+        df_ordinal_cols_stack[df_ordinal_cols_happen_stack.index] = (
+            df_ordinal_cols_happen_stack
+        )
+        df[ordinal_cols] = df_ordinal_cols_stack.unstack()
 
         return df
 
@@ -288,10 +335,12 @@ class HandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
         super().__init__()
 
     def fit(self, X, y=None):
-        numeric_cols, numericCat_cols, cat_cols, _, _, _, target_col = (
-            myfuncs.get_different_types_cols_from_df_4(X)
-        )
+        df = X
 
+        df = df.applymap(lambda x: np.nan if x is pd.NA else x)
+        numeric_cols, numericCat_cols, cat_cols, _, _, _, target_col = (
+            myfuncs.get_different_types_cols_from_df_4(df)
+        )
         self.preprocessor = ColumnTransformer(
             transformers=[
                 ("num", SimpleImputer(strategy="mean"), numeric_cols),
@@ -300,8 +349,7 @@ class HandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
                 ("target", SimpleImputer(strategy="most_frequent"), [target_col]),
             ]
         )
-
-        self.preprocessor.fit(X)
+        self.preprocessor.fit(df)
 
         return self
 
@@ -334,43 +382,79 @@ class AfterHandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
         )
 
         # Chuyen doi ve dung kieu du lieu
-        df[numeric_cols] = df[numeric_cols].astype("float")
-        df[numericCat_cols] = df[numericCat_cols].astype("float")
-        df[cat_cols + [target_col]] = df[cat_cols + [target_col]].astype("category")
+        df[numeric_cols] = df[numeric_cols].astype("float32")
+        df[numericCat_cols] = df[numericCat_cols].astype("float32")
+        df[cat_cols] = df[cat_cols].astype("category")
+        df[target_col] = df[target_col].astype("category")
 
         # Thay doi thu tu cac label cho cac cot ordinal, binary va target
-        bin_values_dict = dict(zip(binary_cols, [["No", "Yes"]] * len(binary_cols)))
-
-        for col, value in bin_values_dict.items():
-            df[col] = df[col].cat.reorder_categories(value, ordered=True)
-
+        ## ordinal
         ord_values_dict = {
-            "GeneralHealth_ord": ["Poor", "Fair", "Good", "Very good", "Excellent"],
-            "LastCheckupTime_ord": [
-                "5 or more years ago",
-                "Within past 5 years (2 years but less than 5 years ago)",
-                "Within past 2 years (1 year but less than 2 years ago)",
-                "Within past year (anytime less than 12 months ago)",
+            "sunrise_ord": ["02", "03", "04", "05", "06", "07", "08", "09", "10", "11"],
+            "sunset_ord": ["14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+            "moonrise_ord": [
+                "No moonrise",
+                "01",
+                "02",
+                "03",
+                "04",
+                "05",
+                "06",
+                "07",
+                "08",
+                "09",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
             ],
-            "SmokerStatus_ord": [
-                "Current smoker - now smokes every day",
-                "Current smoker - now smokes some days",
-                "Former smoker",
-                "Never smoked",
-            ],
-            "ECigaretteUsage_ord": [
-                "Use them every day",
-                "Use them some days",
-                "Not at all (right now)",
-                "Never used e-cigarettes in my entire life",
+            "moonset_ord": [
+                "No moonset",
+                "01",
+                "02",
+                "03",
+                "04",
+                "05",
+                "06",
+                "07",
+                "08",
+                "09",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
             ],
         }
 
         for col, value in ord_values_dict.items():
+            print(f"Xử lí cột {col}")
             df[col] = df[col].cat.reorder_categories(value, ordered=True)
 
+        ## target col
         df[target_col] = df[target_col].cat.reorder_categories(
-            ["No", "Yes"], ordered=True
+            ["low", "medium", "high"], ordered=True
         )
 
         # Loại bỏ duplicates
