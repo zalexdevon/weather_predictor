@@ -148,28 +148,31 @@ class DataTransformation:
         ]
 
     def create_preprocessor_for_train_data(self):
-        # TODO: d
-        print("Start before_feature_pipeline")
-        # d
 
-        before_feature_pipeline = Pipeline(
-            steps=[
-                (str(index), transformer)
-                for index, transformer in enumerate(
-                    self.list_before_feature_transformer
-                )
-            ]
+        before_feature_pipeline = (
+            Pipeline(
+                steps=[
+                    (str(index), transformer)
+                    for index, transformer in enumerate(
+                        self.list_before_feature_transformer
+                    )
+                ]
+            )
+            if len(self.list_before_feature_transformer) > 0
+            else Pipeline(steps=[("passthrough", "passthrough")])
         )
 
-        # TODO: d
-        print("End before_feature_pipeline")
-        # d
-
-        after_feature_pipeline = Pipeline(
-            steps=[
-                (str(index), transformer)
-                for index, transformer in enumerate(self.list_after_feature_transformer)
-            ]
+        after_feature_pipeline = (
+            Pipeline(
+                steps=[
+                    (str(index), transformer)
+                    for index, transformer in enumerate(
+                        self.list_after_feature_transformer
+                    )
+                ]
+            )
+            if len(self.list_after_feature_transformer) > 0
+            else Pipeline(steps=[("passthrough", "passthrough")])
         )
 
         feature_pipeline = Pipeline(

@@ -8,7 +8,7 @@ data_correction:
 
 # DATA TRANSFORMATION
 data_transformation: 
-      number: dt1_1 # id của data_transformation
+      number: dt1_2 # id của data_transformation
       do_smote: f # t: true, f: false
       list_before_feature_transformer: []
       
