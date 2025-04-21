@@ -148,6 +148,10 @@ class DataTransformation:
         ]
 
     def create_preprocessor_for_train_data(self):
+        # TODO: d
+        print("Start before_feature_pipeline")
+        # d
+
         before_feature_pipeline = Pipeline(
             steps=[
                 (str(index), transformer)
@@ -158,7 +162,7 @@ class DataTransformation:
         )
 
         # TODO: d
-        print("Reach before_feature_pipeline")
+        print("End before_feature_pipeline")
         # d
 
         after_feature_pipeline = Pipeline(
