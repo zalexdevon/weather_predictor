@@ -1,4 +1,4 @@
-from classifier.Mylib.myfuncs import read_yaml, sub_param_for_yaml_file
+from Mylib.myfuncs import read_yaml, sub_param_for_yaml_file
 from classifier.constants import *
 from pathlib import Path
 import sys
