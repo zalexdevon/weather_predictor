@@ -2,7 +2,7 @@ import os
 from classifier import logger
 import pandas as pd
 from classifier.entity.config_entity import TestDataCorrectionConfig
-from classifier.Mylib import myfuncs
+from Mylib import myfuncs
 from sklearn.base import BaseEstimator, TransformerMixin
 import numpy as np
 from sklearn.impute import SimpleImputer

@@ -1,5 +1,5 @@
 from classifier.constants import *
-from classifier.Mylib.myfuncs import read_yaml, create_directories
+from Mylib.myfuncs import read_yaml, create_directories
 from classifier.entity.config_entity import (
     DataCorrectionConfig,
     DataTransformationConfig,
@@ -8,8 +8,6 @@ from classifier.entity.config_entity import (
     MonitorPlotterConfig,
     TestDataCorrectionConfig,
 )
-from pathlib import Path
-from classifier.Mylib import myfuncs
 
 
 class ConfigurationManager:

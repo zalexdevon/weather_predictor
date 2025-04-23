@@ -4,7 +4,7 @@ from classifier import logger
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import RandomizedSearchCV, PredefinedSplit, GridSearchCV
 from classifier.entity.config_entity import ModelTrainerConfig
-from classifier.Mylib import myfuncs
+from Mylib import myfuncs
 from sklearn.svm import SVC, LinearSVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -17,8 +17,8 @@ from sklearn.model_selection import ParameterSampler
 from sklearn import metrics
 from sklearn.base import clone
 import time
-from classifier.Mylib import myclasses
-from classifier.Mylib import stringToObjectConverter
+from Mylib import myclasses
+from Mylib import stringToObjectConverter
 import timeit
 
 

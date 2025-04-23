@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from classifier import logger
 from classifier.entity.config_entity import MonitorPlotterConfig
-from classifier.Mylib import myfuncs
+from Mylib import myfuncs
 from sklearn import metrics
 import plotly.express as px
 

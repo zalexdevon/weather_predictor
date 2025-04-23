@@ -1,10 +1,10 @@
 import os
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from classifier.entity.config_entity import ModelTrainerConfig
-from classifier.Mylib import myfuncs
+from Mylib import myfuncs
 from sklearn.base import clone
-from classifier.Mylib import myclasses
-from classifier.Mylib import stringToObjectConverter
+from Mylib import myclasses
+from Mylib import stringToObjectConverter
 
 
 class ModelTrainer:

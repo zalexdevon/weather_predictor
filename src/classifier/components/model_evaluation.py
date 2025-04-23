@@ -2,9 +2,9 @@ import pandas as pd
 import os
 from classifier import logger
 from classifier.entity.config_entity import ModelEvaluationConfig
-from classifier.Mylib import myfuncs
+from Mylib import myfuncs
 from sklearn import metrics
-from classifier.Mylib import myclasses
+from Mylib import myclasses
 
 
 class ModelEvaluation:

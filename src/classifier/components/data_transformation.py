@@ -1,13 +1,13 @@
 from classifier import logger
 import pandas as pd
 from classifier.entity.config_entity import DataTransformationConfig
-from classifier.Mylib import myfuncs
+from Mylib import myfuncs
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, MinMaxScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.base import BaseEstimator, TransformerMixin
 from imblearn.over_sampling import SMOTE
-from classifier.Mylib import stringToObjectConverter
+from Mylib import stringToObjectConverter
 
 
 class CustomOrdinalEncoder(BaseEstimator, TransformerMixin):
