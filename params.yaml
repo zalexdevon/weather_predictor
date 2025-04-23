@@ -23,7 +23,7 @@ data_transformation:
 
 # MODEL TRAINING
 model_trainer: 
-      model_name: model10
+      model_name: model11
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g
@@ -40,8 +40,15 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - XGBClassifier(n_estimators=3, max_depth=2, reg_alpha = 1, reg_lambda=5)
-            - XGBClassifier(n_estimators=3, max_depth=2, reg_alpha = 5, reg_lambda=5)
+            -
+                  - CustomStackingClassifier
+                  - 
+                        estimators: 
+                              - LogisticRegression(C = 0.1), 
+                              - GaussianNB(var_smoothing=1e-8),
+                              - SGDClassifier(alpha=10)
+                        final_estimator: LogisticRegression(C = 0.1)
+                  
 
 
 # MODEL EVALUATION
