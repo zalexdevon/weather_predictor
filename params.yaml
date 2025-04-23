@@ -42,7 +42,6 @@ model_trainer:
       models: 
             - XGBClassifier(n_estimators=3, max_depth=2, reg_alpha = 1, reg_lambda=5)
             - XGBClassifier(n_estimators=3, max_depth=2, reg_alpha = 5, reg_lambda=5)
-            - XGBClassifier(n_estimators=3, max_depth=2, reg_alpha = 5, reg_lambda=10)
 
 
 # MODEL EVALUATION
