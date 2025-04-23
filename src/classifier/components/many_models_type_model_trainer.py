@@ -39,7 +39,7 @@ class ManyModelsTypeModelTrainer:
 
         # Load models
         self.models = [
-            stringToObjectConverter.convert_string_to_object_4(model)
+            stringToObjectConverter.convert_complex_MLmodel_yaml_to_object(model)
             for model in self.config.models
         ]
 

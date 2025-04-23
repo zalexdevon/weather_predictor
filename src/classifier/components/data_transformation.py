@@ -142,12 +142,12 @@ class DataTransformation:
 
         # Load các transfomers
         self.list_before_feature_transformer = [
-            stringToObjectConverter.convert_string_to_object_4(transformer)
+            stringToObjectConverter.convert_complex_MLmodel_yaml_to_object(transformer)
             for transformer in self.config.list_before_feature_transformer
         ]
 
         self.list_after_feature_transformer = [
-            stringToObjectConverter.convert_string_to_object_4(transformer)
+            stringToObjectConverter.convert_complex_MLmodel_yaml_to_object(transformer)
             for transformer in self.config.list_after_feature_transformer
         ]
 

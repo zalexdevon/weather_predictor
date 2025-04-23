@@ -33,8 +33,10 @@ class ModelTrainer:
         )
 
         # Load base model (chưa có tham số)
-        self.base_model = stringToObjectConverter.convert_string_to_object_4(
-            self.config.base_model
+        self.base_model = (
+            stringToObjectConverter.convert_complex_MLmodel_yaml_to_object(
+                self.config.base_model
+            )
         )
 
         # Load params thực hiện fine tune model
