@@ -14,7 +14,6 @@ import traceback
 STAGE_NAME = "Model Trainer stage"
 
 
-#
 class ModelTrainerPipeline:
     def __init__(self):
         pass
