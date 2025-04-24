@@ -16,7 +16,7 @@ data_transformation:
 
 # MODEL TRAINING
 model_trainer: 
-      model_name: model12 
+      model_name: model13 
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g
@@ -33,9 +33,9 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - LGBMClassifier(n_estimators=300, max_depth=25, reg_alpha = 1, reg_lambda=5, subsample=0.7)
-            - LGBMClassifier(n_estimators=300, max_depth=25, reg_alpha = 5, reg_lambda=5, subsample=0.7)
-            - LGBMClassifier(n_estimators=200, max_depth=25, reg_alpha = 5, reg_lambda=5, subsample=0.7)
+            - LGBMClassifier(n_estimators=300, max_depth=35, reg_alpha = 1, reg_lambda=1, colsample_bytree = 0.5)
+            - LGBMClassifier(n_estimators=300, max_depth=35, reg_alpha = 1, reg_lambda=10, colsample_bytree = 0.5)
+            - LGBMClassifier(n_estimators=300, max_depth=35, reg_alpha = 5, reg_lambda=10, colsample_bytree = 0.5)
                   
 # MODEL EVALUATION
 model_evaluation: 
