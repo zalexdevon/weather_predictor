@@ -4,7 +4,7 @@ stages:
             params: 
                   - data_correction.name
             outs: 
-                  - artifacts/data_correction
+                  - artifacts/data_correction_${C}
 
       data_transformation:
             cmd: python src/classifier/pipeline/stage_03_data_transformation.py
