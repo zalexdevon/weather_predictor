@@ -555,7 +555,9 @@ class DataCorrection:
         )
 
     def create_preprocessor_for_train_data(self):
-        self.preprocessor = myclasses.CustomDataPipeline(transformers=[DataCorrector()])
+        self.preprocessor = myclasses.CustomDataPipeline(
+            transformers=[DataCorrector(), DataCorrector2()]
+        )
 
     def transform_data(self):
         df_transformed = self.preprocessor.transform(
