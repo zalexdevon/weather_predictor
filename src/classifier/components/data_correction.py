@@ -337,6 +337,7 @@ class DataCorrection:
 
         # Lưu dữ liệu
         myfuncs.save_python_object(self.config.preprocessor_path, self.preprocessor)
+        myfuncs.save_python_object(self.config.data_path, df_transformed)
         myfuncs.save_python_object(self.config.train_data_path, df_train)
         myfuncs.save_python_object(self.config.val_data_path, df_val)
         myfuncs.save_python_object(self.config.class_names_path, class_names)

@@ -10,6 +10,7 @@ class DataCorrectionConfig:
     # config output
     root_dir: Path
     preprocessor_path: Path
+    data_path: Path
     train_data_path: Path
     val_data_path: Path
     class_names_path: Path

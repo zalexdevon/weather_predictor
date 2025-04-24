@@ -34,6 +34,7 @@ class ConfigurationManager:
             # config output
             root_dir=config.root_dir,
             preprocessor_path=config.preprocessor_path,
+            data_path=config.data_path,
             train_data_path=config.train_data_path,
             val_data_path=config.val_data_path,
             class_names_path=config.class_names_path,
