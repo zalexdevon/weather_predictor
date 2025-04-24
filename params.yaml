@@ -4,19 +4,19 @@ target_score: 0.99
 
 # DATA CORRECTION
 data_correction: 
-      name: dc1_1
+      name: dc2
       val_size: 0.1
 
 # DATA TRANSFORMATION
 data_transformation: 
-      number: dt2 # id của data_transformation
+      number: dt3 # id của data_transformation
       do_smote: f # t: true, f: false
       list_after_feature_transformer:
             - PolynomialFeatures(degree=2, include_bias=False)
 
 # MODEL TRAINING
 model_trainer: 
-      model_name: model14 
+      model_name: model15 
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g
@@ -33,9 +33,8 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - LGBMClassifier(n_estimators=300, max_depth=55, reg_alpha = 5, reg_lambda=5, colsample_bytree = 0.5)
-            - LGBMClassifier(n_estimators=300, max_depth=55, reg_alpha = 5, reg_lambda=20, colsample_bytree = 0.5)
-            - LGBMClassifier(n_estimators=300, max_depth=55, reg_alpha = 10, reg_lambda=10, colsample_bytree = 0.5)
+            - LGBMClassifier(n_estimators=300, max_depth=25, reg_alpha = 1, reg_lambda=5)
+            - LGBMClassifier(n_estimators=300, max_depth=25, reg_alpha = 5, reg_lambda=5)
                   
 # MODEL EVALUATION
 model_evaluation: 

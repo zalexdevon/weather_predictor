@@ -294,7 +294,11 @@ class AfterHandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
         # Loại bỏ duplicates
         df = df.drop_duplicates().reset_index()
 
-        return df
+        df = df.drop(
+            columns=["sunrise_ord", "sunset_ord", "moonrise_ord", "moonset_ord"]
+        )
+
+        return df.reset_index()
 
     def fit_transform(self, X, y=None):
         self.fit(X)
