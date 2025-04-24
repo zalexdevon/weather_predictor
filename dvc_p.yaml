@@ -9,7 +9,7 @@ stages:
       data_transformation:
             cmd: python src/classifier/pipeline/stage_03_data_transformation.py
             deps: 
-                  - artifacts/data_correction
+                  - artifacts/data_correction_${C}
             params:
                   - data_transformation.number
             outs:
