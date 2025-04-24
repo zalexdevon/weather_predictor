@@ -4,7 +4,7 @@ target_score: 0.99
 
 # DATA CORRECTION
 data_correction: 
-      name: dc2
+      name: dc1_2 
       val_size: 0.1
 
 # DATA TRANSFORMATION
