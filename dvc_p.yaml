@@ -1,17 +1,14 @@
 stages:
       data_correction: 
             cmd: python src/classifier/pipeline/stage_02_data_correction.py
-            deps: 
-                  - src/classifier/pipeline/stage_02_data_correction.py
             params: 
-                  - data_correction.val_size
+                  - data_correction.name
             outs: 
                   - artifacts/data_correction
 
       data_transformation:
             cmd: python src/classifier/pipeline/stage_03_data_transformation.py
             deps: 
-                  - src/classifier/pipeline/stage_03_data_transformation.py
                   - artifacts/data_correction
             params:
                   - data_transformation.number
@@ -21,22 +18,18 @@ stages:
       model_trainer:
             cmd: python src/classifier/pipeline/stage_04_model_training.py
             deps:
-                  - src/classifier/pipeline/stage_04_model_training.py
                   - artifacts/data_transformation_${P}
             params:
-                  - model_trainer
+                  - model_trainer.model_name
 
       test_data_correction: 
             cmd: python src/classifier/pipeline/stage_test_data_correction.py
-            deps: 
-                  - src/classifier/pipeline/stage_test_data_correction.py
             outs: 
                   - artifacts/test_data_correction
 
       model_evaluation:
             cmd: python src/classifier/pipeline/stage_05_model_evaluation.py
             deps: 
-                  - src/classifier/pipeline/stage_05_model_evaluation.py
                   - artifacts/test_data_correction
             params:
                   - model_evaluation

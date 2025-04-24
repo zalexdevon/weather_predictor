@@ -4,22 +4,15 @@ target_score: 0.99
 
 # DATA CORRECTION
 data_correction: 
+      name: dc1
       val_size: 0.1
 
 # DATA TRANSFORMATION
 data_transformation: 
       number: dt2 # id của data_transformation
       do_smote: f # t: true, f: false
-      list_before_feature_transformer: []
-
-      
       list_after_feature_transformer:
             - PolynomialFeatures(degree=2, include_bias=False)
-
-
-
-
-
 
 # MODEL TRAINING
 model_trainer: 
@@ -41,19 +34,17 @@ model_trainer:
       # Càn cho model_training_type = m
       models: 
             -
-                  - CustomStackingClassifier
-                  - 
-                        estimators: 
-                              - LogisticRegression(C = 0.1)
-                              - GaussianNB(var_smoothing=1e-8)
-                              - SGDClassifier(alpha=10, loss='log_loss')
-                        final_estimator: LogisticRegression(C = 0.1)
+                  class_name: CustomStackingClassifier
+                  estimators: 
+                        - LogisticRegression(C = 0.1)
+                        - GaussianNB(var_smoothing=1e-8)
+                        - SGDClassifier(alpha=10, loss='log_loss')
+                  final_estimator: LogisticRegression(C = 0.1)
                   
-
-
 # MODEL EVALUATION
 model_evaluation: 
-      data_transformation_no: "1"
+      data_correction_name: dc1
+      data_transformation_no: dt1
       model_name: XGB_12
 
 # MONITOR PLOT

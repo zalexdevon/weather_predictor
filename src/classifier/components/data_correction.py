@@ -12,15 +12,24 @@ from sklearn.model_selection import train_test_split
 import re
 
 
-class UnnecessaryColsDeleter(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(
-        self,
-    ) -> None:
+# Chuỗi nào có PM thì giá trị giờ cộng thêm 12 phút
+def process_time(gold_time: str):
+    if gold_time.endswith("PM"):
+        parts = gold_time.split(":")
+        hour = int(parts[0]) + 12
+        gold_time = f"{hour}:{parts[1]}"
+
+    res = re.split("(AM|PM)", gold_time)[0].strip()
+    res = res.split(":")[0]
+    return res
+
+
+class BeforeHandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
+    def __init__(self) -> None:
         super().__init__()
 
     def fit(self, X, y=None):
+
         return self
 
     def transform(self, X, y=None):
@@ -52,25 +61,6 @@ class UnnecessaryColsDeleter(
                 "air_quality_gb-defra-index",
             ]
         )
-
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
-class ColNamesPreprocessor(BaseEstimator, TransformerMixin):
-    def __init__(
-        self,
-    ) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
 
         #  Đổi tên cột
         rename_dict = {
@@ -119,162 +109,24 @@ class ColNamesPreprocessor(BaseEstimator, TransformerMixin):
             + [target_col]
         ]
 
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
-class ColDatatypePreprocessor(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(
-        self,
-    ) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
-
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
-class NumericColDataPreprocessor(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(
-        self,
-    ) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
-
-        # Cột air_quality_Carbon_Monoxide_num
+        # Kiểm tra nội dung cột Numeric
+        ## Cột air_quality_Carbon_Monoxide_num
         col_name = "air_quality_Carbon_Monoxide_num"
         a = df[col_name][df[col_name] < 0]
         df.loc[a.index, col_name] = np.nan
 
-        # Cột air_quality_Sulphur_dioxide_num
+        ## Cột air_quality_Sulphur_dioxide_num
         col_name = "air_quality_Sulphur_dioxide_num"
         a = df[col_name][df[col_name] < 0]
         df.loc[a.index, col_name] = np.nan
 
-        # Cột air_quality_PM10_num
+        ## Cột air_quality_PM10_num
         col_name = "air_quality_PM10_num"
         a = df[col_name][df[col_name] < 0]
         df.loc[a.index, col_name] = np.nan
 
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
-class NumericCatColDataPreprocessor(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(
-        self,
-    ) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
-
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
-class BinaryColDataPreprocessor(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(
-        self,
-    ) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
-
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
-class NominalColDataPreprocessor(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(
-        self,
-    ) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
-
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
-# Chuỗi nào có PM thì giá trị giờ cộng thêm 12 phút
-def process_time(gold_time: str):
-    if gold_time.endswith("PM"):
-        parts = gold_time.split(":")
-        hour = int(parts[0]) + 12
-        gold_time = f"{hour}:{parts[1]}"
-
-    res = re.split("(AM|PM)", gold_time)[0].strip()
-    res = res.split(":")[0]
-    return res
-
-
-class OrdinalColDataPreprocessor(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(
-        self,
-    ) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
-
-        ordinal_cols = myfuncs.get_different_types_cols_from_df_4(df)[5]
-
-        # Biển đổi 4 cột sunrise_ord, sunset_ord, moonrise_ord, moonset_ord
+        # Kiểm tra nội dung cột Ordinal
+        ## Biển đổi 4 cột sunrise_ord, sunset_ord, moonrise_ord, moonset_ord
         format = r"\d+:\d+\s*(AM|PM)"
 
         df_ordinal_cols = df[ordinal_cols]
@@ -311,25 +163,6 @@ class OrdinalColDataPreprocessor(
         return self.transform(X)
 
 
-class TargetColDataPreprocessor(
-    BaseEstimator, TransformerMixin
-):  # Tách ra nhiều giai đoạn
-    def __init__(self) -> None:
-        super().__init__()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X, y=None):
-        df = X
-
-        return df
-
-    def fit_transform(self, X, y=None):
-        self.fit(X)
-        return self.transform(X)
-
-
 class HandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
     def __init__(self) -> None:
         super().__init__()
@@ -355,6 +188,7 @@ class HandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
 
     def transform(self, X, y=None):
         X = self.preprocessor.transform(X)
+
         return pd.DataFrame(
             X,
             columns=myfuncs.get_real_column_name_from_get_feature_names_out(
@@ -458,7 +292,7 @@ class AfterHandleMissingValuePreprocessor(BaseEstimator, TransformerMixin):
         )
 
         # Loại bỏ duplicates
-        df = df.drop_duplicates()
+        df = df.drop_duplicates().reset_index()
 
         return df
 
@@ -479,24 +313,14 @@ class DataCorrection:
     def create_preprocessor_for_train_data(self):
         self.preprocessor = Pipeline(
             steps=[
-                ("1", UnnecessaryColsDeleter()),
-                ("2", ColNamesPreprocessor()),
-                ("3", ColDatatypePreprocessor()),
-                ("4", NumericColDataPreprocessor()),
-                ("5", NumericCatColDataPreprocessor()),
-                ("6", BinaryColDataPreprocessor()),
-                ("7", NominalColDataPreprocessor()),
-                ("8", OrdinalColDataPreprocessor()),
-                ("9", TargetColDataPreprocessor()),
+                ("before", BeforeHandleMissingValuePreprocessor()),
                 ("during", HandleMissingValuePreprocessor()),
                 ("after", AfterHandleMissingValuePreprocessor()),
             ]
         )
 
     def transform_data(self):
-        df_transformed = self.preprocessor.fit_transform(
-            self.train_raw_data
-        ).reset_index(drop=True)
+        df_transformed = self.preprocessor.fit_transform(self.train_raw_data)
 
         target_col = myfuncs.get_target_col_from_df_26(df_transformed)
 

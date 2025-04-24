@@ -146,6 +146,7 @@ class ManyModelsTypeModelTrainer:
             self.train_scorings,
             self.val_scorings,
         ):
+            model_desc = myfuncs.get_model_desc_for_model_32(model_desc)
             if index == self.best_model_index:
                 model_desc = f"{model_desc} ***************"
             self.best_model_results_text += f"{model_desc}\n-> train scoring: {train_scoring}, val scoring: {val_scoring}\n\n"

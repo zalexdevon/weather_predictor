@@ -34,7 +34,6 @@ class DataTransformationConfig:
 
     # params
     do_smote: str
-    list_before_feature_transformer: list
     list_after_feature_transformer: list
 
 

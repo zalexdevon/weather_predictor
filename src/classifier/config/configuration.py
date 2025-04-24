@@ -60,7 +60,6 @@ class ConfigurationManager:
             val_target_path=config.val_target_path,
             # params
             do_smote=params.do_smote,
-            list_before_feature_transformer=params.list_before_feature_transformer,
             list_after_feature_transformer=params.list_after_feature_transformer,
         )
 

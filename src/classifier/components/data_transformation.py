@@ -141,31 +141,12 @@ class DataTransformation:
         )
 
         # Load các transfomers
-        self.list_before_feature_transformer = [
-            stringToObjectConverter.convert_complex_MLmodel_yaml_to_object(transformer)
-            for transformer in self.config.list_before_feature_transformer
-        ]
-
         self.list_after_feature_transformer = [
             stringToObjectConverter.convert_complex_MLmodel_yaml_to_object(transformer)
             for transformer in self.config.list_after_feature_transformer
         ]
 
     def create_preprocessor_for_train_data(self):
-
-        before_feature_pipeline = (
-            Pipeline(
-                steps=[
-                    (str(index), transformer)
-                    for index, transformer in enumerate(
-                        self.list_before_feature_transformer
-                    )
-                ]
-            )
-            if len(self.list_before_feature_transformer) > 0
-            else Pipeline(steps=[("passthrough", "passthrough")])
-        )
-
         after_feature_pipeline = (
             Pipeline(
                 steps=[
@@ -181,7 +162,6 @@ class DataTransformation:
 
         feature_pipeline = Pipeline(
             steps=[
-                ("pre", before_feature_pipeline),
                 ("during", DuringFeatureTransformer()),
                 ("after", after_feature_pipeline),
             ]
