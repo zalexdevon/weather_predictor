@@ -1,9 +1,8 @@
 tensorflow
 pandas
-numpy
+numpy==1.26.4
 dvc
 matplotlib
-mlflow==2.2.2
 notebook
 scikit-learn==1.3.0 # phiên bản này phù hợp với xgboost
 python-box==6.0.2
