@@ -172,7 +172,7 @@ class DataCorrectorForTrainAndTest:
 
 FEATURE_ORDINAL_DICT = {
     "sunrise_ord": ["02", "03", "04", "05", "06", "07", "08", "09", "10", "11"],
-    "sunset_ord": ["14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+    "sunset_ord": ["12", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
     "moonrise_ord": [
         "No moonrise",
         "01",
