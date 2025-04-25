@@ -9,9 +9,10 @@ data_correction:
 
 # DATA TRANSFORMATION
 data_transformation: 
-      number: z # id của data_transformation
+      number: dt1 # id của data_transformation
       do_smote: f # t: true, f: false
       list_after_feature_transformer: []
+
 
 # MODEL TRAINING
 model_trainer: 
