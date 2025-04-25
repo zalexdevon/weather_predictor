@@ -51,6 +51,7 @@ class ModelTrainerPipeline:
             print(f"Exception: {e}\n")
             print("=====Traceback========")
             traceback.print_exc()
+            exit(1)
 
 
 if __name__ == "__main__":

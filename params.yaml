@@ -2,10 +2,14 @@
 scoring: accuracy
 target_score: 0.99
 
+# DATA CORRECTION
+data_correction: 
+      name: dc1  # id của data correction 
+      do_run: t # t: true, f: false
+
 # DATA TRANSFORMATION
 data_transformation: 
       number: z_4 # id của data_transformation
-      data_correction_name: dc1 # id của data correction 
       do_smote: f # t: true, f: false
       list_after_feature_transformer: []
 

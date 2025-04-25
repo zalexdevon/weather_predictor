@@ -1,6 +1,7 @@
 from classifier.constants import *
 from Mylib.myfuncs import read_yaml, create_directories
 from classifier.entity.config_entity import (
+    DataCorrectionConfig,
     DataTransformationConfig,
     ModelTrainerConfig,
     ModelEvaluationConfig,
@@ -20,6 +21,26 @@ class ConfigurationManager:
         self.params = read_yaml(params_filepath)
 
         create_directories([self.config.artifacts_root])
+
+    def get_data_correction_config(self) -> DataCorrectionConfig:
+        config = self.config.data_correction
+        params = self.params.data_correction
+
+        create_directories([config.root_dir])
+
+        data_correction_config = DataCorrectionConfig(
+            # config input
+            train_data_path=config.train_data_path,
+            # config output
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            feature_ordinal_dict_path=config.feature_ordinal_dict_path,
+            correction_transformer_path=config.correction_transformer_path,
+            # params
+            do_run=params.do_run,
+        )
+
+        return data_correction_config
 
     def get_data_transformation_config(self) -> DataTransformationConfig:
         config = self.config.data_transformation

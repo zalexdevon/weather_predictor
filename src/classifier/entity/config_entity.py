@@ -3,6 +3,21 @@ from pathlib import Path
 
 
 @dataclass(frozen=True)
+class DataCorrectionConfig:
+    # config input
+    train_data_path: Path
+
+    # config output
+    root_dir: Path
+    data_path: Path
+    feature_ordinal_dict_path: Path
+    correction_transformer_path: Path
+
+    # params
+    do_run: str
+
+
+@dataclass(frozen=True)
 class DataTransformationConfig:
     # config input
     train_data_path: Path
