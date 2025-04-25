@@ -149,7 +149,7 @@ class DataTransformation:
 
         feature_pipeline = Pipeline(
             steps=[
-                ("during", DuringFeatureTransformer()),
+                ("during", DuringFeatureTransformer(self.feature_ordinal_dict)),
                 ("after", after_feature_pipeline),
             ]
         )
