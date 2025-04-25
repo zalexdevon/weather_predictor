@@ -22,26 +22,6 @@ class ConfigurationManager:
 
         create_directories([self.config.artifacts_root])
 
-    def get_data_correction_config(self) -> DataCorrectionConfig:
-        config = self.config.data_correction
-        params = self.params.data_correction
-
-        create_directories([config.root_dir])
-
-        return DataCorrectionConfig(
-            # config input
-            train_raw_data_path=config.train_raw_data_path,
-            # config output
-            root_dir=config.root_dir,
-            preprocessor_path=config.preprocessor_path,
-            data_path=config.data_path,
-            train_data_path=config.train_data_path,
-            val_data_path=config.val_data_path,
-            class_names_path=config.class_names_path,
-            # params
-            val_size=params.val_size,
-        )
-
     def get_data_transformation_config(self) -> DataTransformationConfig:
         config = self.config.data_transformation
         params = self.params.data_transformation
@@ -51,10 +31,12 @@ class ConfigurationManager:
         data_transformation_config = DataTransformationConfig(
             # config input
             train_data_path=config.train_data_path,
+            feature_ordinal_dict_path=config.feature_ordinal_dict_path,
+            correction_transformer_path=config.correction_transformer_path,
             val_data_path=config.val_data_path,
             # config output
             root_dir=config.root_dir,
-            preprocessor_path=config.preprocessor_path,
+            transformation_transformer_path=config.transformation_transformer_path,
             train_features_path=config.train_features_path,
             train_target_path=config.train_target_path,
             val_features_path=config.val_features_path,

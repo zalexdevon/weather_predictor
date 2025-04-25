@@ -7,7 +7,7 @@ import yaml
 
 params = read_yaml(PARAMS_FILE_PATH)
 
-C = params.data_correction.name
+C = params.data_transformation.data_correction_name
 P = params.data_transformation.number
 T = params.model_trainer.model_name
 CE = params.model_evaluation.data_correction_name

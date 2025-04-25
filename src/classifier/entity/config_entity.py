@@ -3,31 +3,16 @@ from pathlib import Path
 
 
 @dataclass(frozen=True)
-class DataCorrectionConfig:
-    # config input
-    train_raw_data_path: Path
-
-    # config output
-    root_dir: Path
-    preprocessor_path: Path
-    data_path: Path
-    train_data_path: Path
-    val_data_path: Path
-    class_names_path: Path
-
-    # params
-    val_size: float
-
-
-@dataclass(frozen=True)
 class DataTransformationConfig:
     # config input
     train_data_path: Path
+    feature_ordinal_dict_path: Path
+    correction_transformer_path: Path
     val_data_path: Path
 
     # config output
     root_dir: Path
-    preprocessor_path: Path
+    transformation_transformer_path: Path
     train_features_path: Path
     train_target_path: Path
     val_features_path: Path
