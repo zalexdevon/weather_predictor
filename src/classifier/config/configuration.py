@@ -1,7 +1,6 @@
 from classifier.constants import *
 from Mylib.myfuncs import read_yaml, create_directories
 from classifier.entity.config_entity import (
-    DataCorrectionConfig,
     DataTransformationConfig,
     ModelTrainerConfig,
     ModelEvaluationConfig,
