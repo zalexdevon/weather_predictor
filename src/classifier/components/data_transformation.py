@@ -61,7 +61,15 @@ class DuringFeatureTransformer(BaseEstimator, TransformerMixin):
             ],
         )
 
+        # TODO: d
+        print("START self.column_transformer.fit(X)")
+        # d
+
         self.column_transformer.fit(X)
+
+        # TODO: d
+        print("END self.column_transformer.fit(X)")
+        # d
 
     def transform(self, X, y=None):
         X = self.column_transformer.transform(X)

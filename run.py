@@ -28,4 +28,8 @@ sub_param_for_yaml_file("dvc_p.yaml", "dvc.yaml", replace_dict)
 
 
 stage_name = sys.argv[1]
-os.system(f"dvc repro {stage_name}")
+do_compel_run = sys.argv[2]
+do_compel_run = "--force" if do_compel_run == "y" else ""
+
+
+os.system(f"dvc repro {do_compel_run} {stage_name}")
