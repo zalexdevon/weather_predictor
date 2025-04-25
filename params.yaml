@@ -4,8 +4,8 @@ target_score: 0.99
 
 # DATA TRANSFORMATION
 data_transformation: 
-      number: z_2 # id của data_transformation
-      data_correction_name: dc1
+      number: z_3 # id của data_transformation
+      data_correction_name: dc1 # id của data correction 
       do_smote: f # t: true, f: false
       list_after_feature_transformer: []
 
