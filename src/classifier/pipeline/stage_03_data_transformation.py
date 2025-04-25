@@ -32,6 +32,7 @@ class DataTransformationPipeline:
             print(f"Exception: {e}\n")
             print("=====Traceback========\n")
             traceback.print_exc()
+            exit(1)
 
 
 if __name__ == "__main__":

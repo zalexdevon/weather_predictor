@@ -112,6 +112,8 @@ class DataTransformation:
         self.config = config
 
     def load_data(self):
+        a = float("12aaaa")
+
         self.df_train = myfuncs.load_python_object(self.config.train_data_path)
         self.feature_ordinal_dict = myfuncs.load_python_object(
             self.config.feature_ordinal_dict_path
