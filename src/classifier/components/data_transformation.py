@@ -199,7 +199,9 @@ class DataTransformation:
                 df_train_feature, df_train_target
             )
 
-        df_val_corrected = self.correction_transformer.transform(self.df_val)
+        df_val_corrected = self.correction_transformer.transform(
+            self.df_val, data_type="test"
+        )
         df_val_transformed = self.transformation_transformer.transform(df_val_corrected)
         df_val_feature = df_val_transformed.drop(columns=[self.target_col]).astype(
             "float32"
