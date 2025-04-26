@@ -204,7 +204,7 @@ class DataTransformation:
         class_names = list(
             self.transformation_transformer.column_transformer.named_transformers_[
                 "target"
-            ].categories_
+            ].categories_[0]
         )
 
         # TODO: d
