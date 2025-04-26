@@ -129,6 +129,11 @@ class DataTransformation:
         self.correction_transformer = myfuncs.load_python_object(
             self.config.correction_transformer_path
         )
+
+        # TODO: d
+        print(f"correction_transformer: {self.config.correction_transformer_path}")
+        # d
+
         self.df_val = myfuncs.load_python_object(self.config.val_data_path)
 
         self.num_train_sample = len(self.df_train)
