@@ -3,14 +3,10 @@ stages:
             cmd: python src/classifier/pipeline/stage_data_correction.py
             params:
                   - data_correction.name
-            outs:
-                  - artifacts/data_correction_${C}
 
 
       data_transformation:
             cmd: python src/classifier/pipeline/stage_03_data_transformation.py
-            deps: 
-                  - artifacts/data_correction_${C}
             params:
                   - data_transformation.number
             outs:
