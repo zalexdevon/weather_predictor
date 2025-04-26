@@ -26,6 +26,9 @@ class ConfigurationManager:
         config = self.config.data_correction
         params = self.params.data_correction
 
+        if params.do_run == "f":
+            return None
+
         create_directories([config.root_dir])
 
         data_correction_config = DataCorrectionConfig(
