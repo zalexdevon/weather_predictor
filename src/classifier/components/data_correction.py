@@ -63,6 +63,10 @@ class BeforeHandleMissingValueTransformer(BaseEstimator, TransformerMixin):
                 "gust_mph",
                 "air_quality_us-epa-index",
                 "air_quality_gb-defra-index",
+                "sunrise",
+                "sunset",
+                "moonrise",
+                "moonset",
             ]
         )
 
@@ -82,10 +86,6 @@ class BeforeHandleMissingValueTransformer(BaseEstimator, TransformerMixin):
             "air_quality_Sulphur_dioxide": "air_quality_Sulphur_dioxide_num",
             "air_quality_PM2.5": "air_quality_PM2_5_num",
             "air_quality_PM10": "air_quality_PM10_num",
-            "sunrise": "sunrise_ord",
-            "sunset": "sunset_ord",
-            "moonrise": "moonrise_ord",
-            "moonset": "moonset_ord",
             "moon_phase": "moon_phase_nom",
             "moon_illumination": "moon_illumination_num",
             "temp_bin": "temp_bin_target",
@@ -112,35 +112,6 @@ class BeforeHandleMissingValueTransformer(BaseEstimator, TransformerMixin):
             + ordinal_cols
             + [target_col]
         ]
-
-        # Kiểm tra nội dung cột Ordinal
-        ## Biển đổi 4 cột sunrise_ord, sunset_ord, moonrise_ord, moonset_ord
-        format = r"\d+:\d+\s*(AM|PM)"
-
-        df_ordinal_cols = df[ordinal_cols]
-        index_not_satisfy_format = (
-            df_ordinal_cols[
-                df_ordinal_cols.applymap(
-                    lambda item: re.fullmatch(format, item) is None
-                )
-            ]
-            .stack()
-            .index
-        )
-
-        df_ordinal_cols_happen_stack = df_ordinal_cols.stack()
-        df_ordinal_cols_happen_stack = df_ordinal_cols_happen_stack[
-            ~df_ordinal_cols_happen_stack.index.isin(index_not_satisfy_format)
-        ]
-        df_ordinal_cols_happen_stack = df_ordinal_cols_happen_stack.apply(
-            lambda item: process_time(item)
-        )
-
-        df_ordinal_cols_stack = df_ordinal_cols.stack()
-        df_ordinal_cols_stack[df_ordinal_cols_happen_stack.index] = (
-            df_ordinal_cols_happen_stack
-        )
-        df[ordinal_cols] = df_ordinal_cols_stack.unstack()
 
         self.cols = df.columns
 
@@ -357,64 +328,7 @@ class DataCorrectorForTrainAndTest:
         return df
 
 
-FEATURE_ORDINAL_DICT = {
-    "sunrise_ord": ["02", "03", "04", "05", "06", "07", "08", "09", "10", "11"],
-    "sunset_ord": ["12", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
-    "moonrise_ord": [
-        "No moonrise",
-        "01",
-        "02",
-        "03",
-        "04",
-        "05",
-        "06",
-        "07",
-        "08",
-        "09",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "20",
-        "21",
-        "22",
-        "23",
-        "24",
-    ],
-    "moonset_ord": [
-        "No moonset",
-        "01",
-        "02",
-        "03",
-        "04",
-        "05",
-        "06",
-        "07",
-        "08",
-        "09",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "20",
-        "21",
-        "22",
-        "23",
-        "24",
-    ],
-}
+FEATURE_ORDINAL_DICT = {}
 
 
 class DataCorrection:
