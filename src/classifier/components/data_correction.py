@@ -37,6 +37,8 @@ class BeforeHandleMissingValueTransformer(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, y=None):
+        print("Chả nhẽ là chạy cái này nữa sao AAAAAAAAAAAAAAAAA")
+
         df = X
 
         # Xóa các cột không cần thiết
