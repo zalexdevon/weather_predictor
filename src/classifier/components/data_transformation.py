@@ -202,12 +202,14 @@ class DataTransformation:
         df_val_target = df_val_transformed[self.target_col].astype("int8")
 
         class_names = list(
-            (
-                self.transformation_transformer.column_transformer.named_transformers_[
-                    "target"
-                ].categories_
-            )
+            self.transformation_transformer.column_transformer.named_transformers_[
+                "target"
+            ].categories_
         )
+
+        # TODO: d
+        print(f"class_names: {class_names}")
+        # d
 
         myfuncs.save_python_object(
             self.config.transformation_transformer_path, self.transformation_transformer
