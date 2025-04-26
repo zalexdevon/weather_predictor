@@ -163,7 +163,7 @@ class DC1:
         df[target_col] = df[target_col].astype("category")
 
         # Loại bỏ duplicates
-        df = df.drop_duplicates().reset_index()
+        df = df.drop_duplicates().reset_index(drop=True)
 
         return df
 
