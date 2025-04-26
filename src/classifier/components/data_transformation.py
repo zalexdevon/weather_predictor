@@ -13,7 +13,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.base import BaseEstimator, TransformerMixin
 from imblearn.over_sampling import SMOTE
 from Mylib import stringToObjectConverter
-from Mylib.myclasses import CustomTransformer
 
 
 class DuringFeatureTransformer(BaseEstimator, TransformerMixin):
