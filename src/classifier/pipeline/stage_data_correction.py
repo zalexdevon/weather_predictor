@@ -15,10 +15,6 @@ class DataCorrectionPipeline:
         config = ConfigurationManager()
         data_correction_config = config.get_data_correction_config()
 
-        if data_correction_config is None:
-            print("Stage này đã chạy trên notebook rồi !!!!")
-            return
-
         data_corrrection = DataCorrection(config=data_correction_config)
 
         try:

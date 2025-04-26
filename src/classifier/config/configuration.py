@@ -26,9 +26,6 @@ class ConfigurationManager:
         config = self.config.data_correction
         params = self.params.data_correction
 
-        if params.do_run == "f":
-            return None
-
         create_directories([config.root_dir])
 
         data_correction_config = DataCorrectionConfig(
@@ -39,8 +36,6 @@ class ConfigurationManager:
             data_path=config.data_path,
             feature_ordinal_dict_path=config.feature_ordinal_dict_path,
             correction_transformer_path=config.correction_transformer_path,
-            # params
-            do_run=params.do_run,
         )
 
         return data_correction_config
