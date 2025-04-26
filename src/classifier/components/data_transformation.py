@@ -61,15 +61,7 @@ class DuringFeatureTransformer(BaseEstimator, TransformerMixin):
             ],
         )
 
-        # TODO: d
-        print("START self.column_transformer.fit(X)")
-        # d
-
         self.column_transformer.fit(X)
-
-        # TODO: d
-        print("END self.column_transformer.fit(X)")
-        # d
 
     def transform(self, X, y=None):
         X = self.column_transformer.transform(X)
@@ -120,6 +112,10 @@ class DataTransformation:
         self.config = config
 
     def load_data(self):
+        # TODO: d
+        print(f"data correction path: {self.config.train_data_path}")
+        # d
+
         self.df_train = myfuncs.load_python_object(self.config.train_data_path)
         self.feature_ordinal_dict = myfuncs.load_python_object(
             self.config.feature_ordinal_dict_path
