@@ -34,6 +34,10 @@ class DataCorrectorForTrainAndTest:
         pass
 
     def transform(self, df, data_type):
+        # TODO: d
+        print("Chả nhẽ là lại chạy ở đây được sao")
+        # d
+
         # Xóa các cột không cần thiết
         df = df.drop(
             columns=[
