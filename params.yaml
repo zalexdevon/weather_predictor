@@ -8,7 +8,7 @@ data_correction:
 
 # DATA TRANSFORMATION
 data_transformation: 
-      number: dt5   # id của data_transformation
+      number: dt4   # id của data_transformation
       do_smote: f # t: true, f: false
       list_after_feature_transformer:
             - PolynomialFeatures(degree=2, include_bias=False)
@@ -16,7 +16,7 @@ data_transformation:
 
 # MODEL TRAINING  
 model_trainer: 
-      model_name: model15 
+      model_name: model16 
       model_training_type: m  # rcv: randomisedcv, gcv: gridcv, r: randomisedTrainVal, g: gridTrainVal, m: many models
 
       # Cần cho model_training_type = rcv, gcv, r, g
@@ -33,8 +33,16 @@ model_trainer:
 
       # Càn cho model_training_type = m
       models: 
-            - LGBMClassifier(n_estimators=300, max_depth=25, reg_alpha = 1, reg_lambda=5)
-            - LGBMClassifier(n_estimators=300, max_depth=25, reg_alpha = 5, reg_lambda=5)
+            -
+                  class_name: CustomStackingClassifier
+                  estimators:
+                        - LogisticRegression(C = 0.1)
+                        - LogisticRegression(C = 0.1, solver='saga', penalty='elasticnet', l1_ratio=0.5)
+                        - LogisticRegression(C = 0.1, solver='saga', penalty='l1')
+                        - GaussianNB(var_smoothing=1e-8)
+                        - RandomForestClassifier(n_estimators=10, max_depth=10)
+                        - LGBMClassifier(n_estimators=100, max_depth=10, reg_alpha = 5, reg_lambda=5)
+                  final_estimator: LGBMClassifier(n_estimators=300, max_depth=25, reg_alpha = 1, reg_lambda=5)
                   
 # MODEL EVALUATION
 model_evaluation: 
