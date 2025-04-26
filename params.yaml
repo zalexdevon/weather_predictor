@@ -4,14 +4,15 @@ target_score: 0.99
 
 # DATA CORRECTION
 data_correction: 
-      name: dc1  # id của data correction 
+      name: dc2  # id của data correction 
       do_run: t # t: true, f: false
 
 # DATA TRANSFORMATION
 data_transformation: 
-      number: dt1  # id của data_transformation
+      number: dt3  # id của data_transformation
       do_smote: f # t: true, f: false
-      list_after_feature_transformer: []
+      list_after_feature_transformer:
+            - PolynomialFeatures(degree=2, include_bias=False)
 
 
 # MODEL TRAINING  
