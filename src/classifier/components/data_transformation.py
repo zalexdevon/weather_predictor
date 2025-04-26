@@ -114,12 +114,18 @@ class DataTransformation:
     def load_data(self):
         # TODO: d
         print(f"data correction path: {self.config.train_data_path}")
+
         # d
 
         self.df_train = myfuncs.load_python_object(self.config.train_data_path)
         self.feature_ordinal_dict = myfuncs.load_python_object(
             self.config.feature_ordinal_dict_path
         )
+
+        # TODO: d
+        print(f"feature_ordinal_dict: {self.feature_ordinal_dict}")
+        # d
+
         self.correction_transformer = myfuncs.load_python_object(
             self.config.correction_transformer_path
         )
