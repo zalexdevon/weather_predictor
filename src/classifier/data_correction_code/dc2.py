@@ -21,6 +21,11 @@ class DC2:
         pass
 
     def transform(self, df, data_type):
+
+        # TODO: d
+        print("Chạy vào đây nè ní ơi !!!!!!!!!!")
+        # d
+
         # Xóa các cột không cần thiết
         df = df.drop(
             columns=[
