@@ -168,16 +168,10 @@ class DataTransformation:
             ]
         )
 
-        target_pipeline = Pipeline(
-            steps=[
-                ("during", OrdinalEncoder()),
-            ]
-        )
-
         column_transformer = ColumnTransformer(
             transformers=[
                 ("feature", feature_pipeline, self.feature_cols),
-                ("target", target_pipeline, [self.target_col]),
+                ("target", OrdinalEncoder(), [self.target_col]),
             ]
         )
 
@@ -207,6 +201,14 @@ class DataTransformation:
         )
         df_val_target = df_val_transformed[self.target_col].astype("int8")
 
+        class_names = list(
+            (
+                self.transformation_transformer.column_transformer.named_transformers_[
+                    "target"
+                ].categories_
+            )
+        )
+
         myfuncs.save_python_object(
             self.config.transformation_transformer_path, self.transformation_transformer
         )
@@ -214,3 +216,5 @@ class DataTransformation:
         myfuncs.save_python_object(self.config.train_target_path, df_train_target)
         myfuncs.save_python_object(self.config.val_features_path, df_val_feature)
         myfuncs.save_python_object(self.config.val_target_path, df_val_target)
+        myfuncs.save_python_object(self.config.val_target_path, df_val_target)
+        myfuncs.save_python_object(self.config.class_names_path, class_names)

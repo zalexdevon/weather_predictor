@@ -29,6 +29,7 @@ class DataTransformationConfig:
     train_target_path: Path
     val_features_path: Path
     val_target_path: Path
+    class_names_path: Path
 
     # params
     do_smote: str

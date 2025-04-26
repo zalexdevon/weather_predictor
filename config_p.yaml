@@ -27,6 +27,7 @@ data_transformation:
       train_target_path: artifacts/data_transformation_${P}/train_target.pkl
       val_features_path: artifacts/data_transformation_${P}/val_features.pkl
       val_target_path: artifacts/data_transformation_${P}/val_target.pkl
+      class_names_path: artifacts/data_transformation_${P}/class_names.pkl
 
 # MODEL TRAINING
 model_trainer:
@@ -35,7 +36,7 @@ model_trainer:
       train_target_path: artifacts/data_transformation_${P}/train_target.pkl
       val_feature_path: artifacts/data_transformation_${P}/val_features.pkl
       val_target_path: artifacts/data_transformation_${P}/val_target.pkl
-      class_names_path: artifacts/data_correction_${C}/class_names.pkl
+      class_names_path: artifacts/data_transformation_${P}/class_names.pkl
 
       # output
       root_dir: artifacts/model_trainer/${T}
